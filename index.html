@@ -3,74 +3,517 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>بوابة بلدة الخريطة</title>
+  <meta name="description" content="بوابة قرية الخريطة، خدمات طبية، زراعية، ومجتمعية على ضفاف نهر الفرات" />
+  <meta name="keywords" content="قرية الخريطة, خدمات, الفرات, زراعة, تعليم" />
+  <title>بوابة قرية الخريطة</title>
+  <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&family=Cairo:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <script async src="https://www.googletagmanager.com/gtag/js?id=YOUR_GA_ID"></script>
+  <script src="https://cdn.jsdelivr.net/npm/fullcalendar@6.1.8/index.global.min.js"></script>
+  <script async src="https://maps.googleapis.com/maps/api/js?key=YOUR_GOOGLE_MAPS_API_KEY&callback=initMap"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/i18next/23.11.5/i18next.min.js"></script>
+  <script>
+    window.dataLayer = window.dataLayer || [];
+    function gtag(){dataLayer.push(arguments);}
+    gtag('js', new Date());
+    gtag('config', 'YOUR_GA_ID');
+  </script>
   <style>
+    :root {
+      --bg-color: #f7f9fa;
+      --text-color: #1d5c57;
+      --header-bg: linear-gradient(90deg, #1d5c57, #134e4a);
+      --card-bg: #fff;
+    }
+    [data-theme="dark"] {
+      --bg-color: #1a1a1a;
+      --text-color: #ffffff;
+      --header-bg: linear-gradient(90deg, #333, #222);
+      --card-bg: #333;
+    }
     body {
-      font-family: "Cairo", sans-serif;
-      margin: 0;
-      background-color: #f5f7f6;
+      font-family: 'Tajawal', sans-serif;
+      background: var(--bg-color);
+      color: var(--text-color);
+      overflow-x: hidden;
+      transition: background 0.3s ease, color 0.3s ease;
     }
     header {
-      background-color: #004d40;
+      background: var(--header-bg);
+      background-attachment: fixed;
+      background-position: center;
       color: white;
-      padding: 20px;
+      padding: 40px 20px;
       text-align: center;
+      position: relative;
+      box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    }
+    header::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      background: url('https://source.unsplash.com/random/1920x200?river') no-repeat center/cover;
+      opacity: 0.15;
+      z-index: 0;
+    }
+    header h1, header p {
+      position: relative;
+      z-index: 1;
+      text-shadow: 0 2px 4px rgba(0, 0, 0, 0.3);
+    }
+    .theme-toggle, .lang-toggle {
+      position: absolute;
+      top: 20px;
+      background: #f59e0b;
+      border: none;
+      padding: 10px;
+      border-radius: 50%;
+      cursor: pointer;
+    }
+    .theme-toggle { left: 20px; }
+    .lang-toggle { left: 70px; }
+    .nav-link {
+      color: var(--text-color) !important;
+      font-weight: bold;
+      padding: 10px 20px;
+      transition: color 0.3s ease, transform 0.3s ease;
+    }
+    .nav-link:hover {
+      color: #f59e0b !important;
+      transform: scale(1.1);
     }
     .ticker {
-      background-color: #00695c;
-      color: white;
-      padding: 10px;
-      font-weight: bold;
+      background-color: #e6f0ee;
+      padding: 15px;
+      white-space: nowrap;
       overflow: hidden;
+      direction: rtl;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+      margin: 15px 0;
+      font-size: 1.1rem;
     }
-    .alert {
-      background-color: #ffeb3b;
+    .ticker span {
+      display: inline-block;
+      padding-left: 100%;
+      animation: scroll 10s linear infinite;
+    }
+    .ticker-warning {
+      background: linear-gradient(90deg, #f59e0b, #d4a017);
+      color: white;
+      padding: 20px;
+      font-size: 1.2rem;
+      font-weight: bold;
+      border-radius: 10px;
+      position: relative;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.2);
+      animation: pulse 2s infinite;
+    }
+    .ticker-warning i {
+      margin-left: 10px;
+      font-size: 1.3rem;
+    }
+    .ticker-warning a {
+      color: #fff;
+      text-decoration: underline;
+      margin-right: 10px;
+    }
+    .ticker-warning button {
+      background: #1d5c57;
+      color: white;
+      border: none;
+      padding: 8px 15px;
+      border-radius: 8px;
+      cursor: pointer;
+      transition: background 0.3s ease;
+    }
+    .ticker-warning button:hover {
+      background: #134e4a;
+    }
+    @keyframes scroll {
+      from { transform: translateX(0); }
+      to { transform: translateX(-100%); }
+    }
+    @keyframes pulse {
+      0% { opacity: 1; }
+      50% { opacity: 0.8; }
+      100% { opacity: 1; }
+    }
+    .service-folder {
+      background-color: var(--card-bg);
+      border-radius: 15px;
+      padding: 25px;
+      text-align: center;
+      transition: transform 0.4s ease, box-shadow 0.4s ease;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      cursor: pointer;
+      position: relative;
+      overflow: hidden;
+      border: 2px solid #d4a017;
+    }
+    .service-folder::before {
+      content: '';
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 5px;
+      background: linear-gradient(90deg, #f59e0b, #d4a017);
+      transition: height 0.3s ease;
+    }
+    .service-folder:hover::before {
+      height: 100%;
+      opacity: 0.1;
+    }
+    .service-folder:hover {
+      transform: translateY(-15px);
+      box-shadow: 0 10px 25px rgba(0, 0, 0, 0.2);
+    }
+    .service-folder i {
+      font-size: clamp(2rem, 5vw, 2.5rem);
+      color: #f59e0b;
+      margin-bottom: 15px;
+      transition: transform 0.3s ease;
+    }
+    .service-folder:hover i {
+      transform: scale(1.2);
+    }
+    .service-details {
+      display: none;
+      background: #e6f0ee;
+      border-radius: 10px;
+      padding: 20px;
+      margin-top: 10px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+    .service-details.active {
+      display: block;
+    }
+    .service-details .sub-service {
+      display: flex;
+      align-items: center;
       padding: 10px;
-      text-align: center;
-      color: #000;
-      font-weight: bold;
+      border-bottom: 1px solid #ddf1ef;
     }
-    .social {
-      text-align: center;
-      margin: 15px;
+    .service-details .sub-service i {
+      font-size: 1.5rem;
+      color: #f59e0b;
+      margin-left: 10px;
     }
-    .social a {
-      color: #00695c;
-      text-decoration: none;
-      font-weight: bold;
+    .game-container {
+      display: flex;
+      flex-direction: column;
+      gap: 10px;
+    }
+    .game-btn {
+      background: #f59e0b;
+      color: white;
+      border: none;
+      padding: 10px;
+      border-radius: 8px;
+      font-size: 1rem;
+      cursor: pointer;
+      transition: transform 0.3s ease;
+    }
+    .game-btn:hover {
+      transform: scale(1.1);
+    }
+    .ai-chat {
+      position: fixed;
+      bottom: 20px;
+      left: 20px;
+      z-index: 1000;
+    }
+    .ai-chat-button {
+      background: #1d5c57;
+      color: white;
+      border: none;
+      padding: 15px;
+      border-radius: 50%;
+      font-size: 1.5rem;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
+      transition: transform 0.3s ease;
+    }
+    .ai-chat-button:hover {
+      transform: scale(1.2);
+    }
+    .ai-chat-box {
+      display: none;
+      background: var(--card-bg);
+      border-radius: 10px;
+      padding: 20px;
+      width: clamp(280px, 90vw, 350px);
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.2);
+      position: absolute;
+      bottom: 60px;
+      left: 0;
+    }
+    .ai-chat-box.active {
+      display: block;
+    }
+    .ai-chat-box input {
+      border-radius: 8px;
+      border: 1px solid #1d5c57;
+      width: 100%;
+      padding: 10px;
+      margin-bottom: 10px;
+    }
+    .ai-chat-box .response {
+      background: #e6f0ee;
+      padding: 10px;
+      border-radius: 8px;
+      margin-top: 10px;
+    }
+    .suggestions {
+      position: absolute;
+      background: var(--card-bg);
+      border: 1px solid #1d5c57;
+      border-radius: 5px;
+      z-index: 1000;
+      width: clamp(200px, 90%, 300px);
+    }
+    .suggestions div {
+      padding: 10px;
+      cursor: pointer;
+    }
+    .suggestions div:hover {
+      background: #e6f0ee;
     }
     footer {
-      background-color: #004d40;
+      background: var(--header-bg);
       color: white;
+      padding: 30px;
       text-align: center;
-      padding: 10px;
+      box-shadow: 0 -4px 15px rgba(0, 0, 0, 0.2);
+    }
+    footer a {
+      color: #f59e0b;
+      margin: 0 15px;
+      transition: color 0.3s ease;
+    }
+    footer a:hover {
+      color: #d4a017;
+    }
+    #mapContainer {
+      height: 400px;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+    }
+    #calendar {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 10px;
+    }
+    .stats-panel {
+      background: var(--card-bg);
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
       margin-top: 20px;
+    }
+    @media (max-width: 768px) {
+      .service-folder {
+        margin-bottom: 20px;
+      }
+      .ticker-warning {
+        font-size: 1rem;
+      }
+      .ai-chat-box {
+        width: 280px;
+      }
     }
   </style>
 </head>
 <body>
-
-  <div class="ticker">
-    الموقع قيد الإنشاء بواسطة أبو خالد
-  </div>
-
   <header>
-    <h1>بوابة بلدة الخريطة</h1>
-    <p>خدمات إلكترونية، بلدية، مجتمع، تواصل</p>
+    <button class="theme-toggle" id="themeToggle"><i class="fas fa-moon"></i></button>
+    <button class="lang-toggle" id="langToggle"><i class="fas fa-globe"></i></button>
+    <h1 data-i18n="header.title">بوابة قرية الخريطة</h1>
+    <p data-i18n="header.description">قرية زراعية نابضة بالحياة على ضفاف نهر الفرات</p>
   </header>
 
-  <div class="alert">
-    يرجى نشر رابط الموقع على أوسع نطاق ❤️
+  <nav class="nav justify-content-center bg-light py-3 shadow-sm">
+    <a class="nav-link" href="#home" data-i18n="nav.home">الرئيسية</a>
+    <a class="nav-link" href="#services" data-i18n="nav.services">الخدمات</a>
+    <a class="nav-link" href="#about" data-i18n="nav.about">عن القرية</a>
+    <a class="nav-link" href="#events" data-i18n="nav.events">الفعاليات</a>
+    <a class="nav-link" href="#feedback" data-i18n="nav.feedback">التعليقات</a>
+    <a class="nav-link" href="https://alikhbariah.com/" target="_blank" data-i18n="nav.news">الأخبار</a>
+  </nav>
+
+  <div class="container my-3 position-relative">
+    <input type="text" class="form-control" id="searchInput" placeholder="ابحث عن خدمة..." data-i18n="[placeholder]search.placeholder">
+    <select id="filterCategory" class="form-select mt-2">
+      <option value="all" data-i18n="filter.all">الكل</option>
+      <option value="medical" data-i18n="filter.medical">طبية</option>
+      <option value="municipality" data-i18n="filter.municipality">بلدية</option>
+      <option value="education" data-i18n="filter.education">تعليم</option>
+      <option value="agriculture" data-i18n="filter.agriculture">زراعة</option>
+    </select>
   </div>
 
-  <div class="social">
-    تابعنا على فيسبوك:
-    <a href="https://www.facebook.com/share/1LCd4zCjcd/" target="_blank">اضغط هنا</a>
+  <div class="ticker"><span><i class="fas fa-bullhorn me-2"></i> <span id="announcement" data-i18n="ticker.announcement">الموقع قيد الإنشاء بواسطة أبو خالد</span></span></div>
+  <div class="ticker ticker-warning">
+    <span><i class="fas fa-bullhorn me-2"></i> <span data-i18n="ticker.warning">يرجى نشر رابط الموقع:</span> <a href="https://your-site-url.com" target="_blank">اضغط هنا</a></span>
+    <button onclick="navigator.clipboard.write('https://your-site-url.com'); alert(i18next.t('ticker.copy_alert'))" data-i18n="[innerHTML]ticker.copy_button">نسخ الرابط</button>
   </div>
 
-  <footer>
-    &copy; 2025 بوابة بلدة الخريطة - جميع الحقوق محفوظة
-  </footer>
+  <section class="container my-5" id="home">
+    <h3 class="text-center mb-4" style="color: var(--text-color);" data-i18n="home.title">أخبار وخدمات جديدة</h3>
+    <div class="row g-4">
+      <div class="col-md-4 col-sm-6">
+        <div class="service-folder">
+          <i class="fas fa-broom"></i>
+          <h5 data-i18n="home.cleaning">حملة نظافة عامة</h5>
+          <p data-i18n="home.cleaning_desc">حملة تنظيف القرية بالتعاون مع الشباب</p>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6">
+        <div class="service-folder">
+          <i class="fas fa-users"></i>
+          <h5 data-i18n="home.youth">فعاليات شبابية</h5>
+          <p data-i18n="home.youth_desc">فعاليات ترفيهية وثقافية لشباب القرية</p>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6">
+        <div class="service-folder">
+          <i class="fas fa-hand-holding-heart"></i>
+          <h5 data-i18n="home.community">خدمات مجتمعية</h5>
+          <p data-i18n="home.community_desc">دعم المجتمع من خلال مبادرات خيرية</p>
+        </div>
+      </div>
+    </div>
+  </section>
 
-</body>
-</html>
+  <section class="container my-5" id="services">
+    <h3 class="text-center mb-4" style="color: var(--text-color);" data-i18n="services.title">جميع الخدمات في قرية الخريطة</h3>
+    <div class="row g-4" id="servicesContainer">
+      <div class="col-md-4 col-sm-6" data-category="medical">
+        <div class="service-folder" onclick="toggleDetails('medical')" data-service="medical">
+          <i class="fas fa-hospital"></i>
+          <h5 data-i18n="services.medical">الخدمات الطبية</h5>
+        </div>
+        <div class="service-details" id="medical">
+          <div class="sub-service"><i class="fas fa-prescription-bottle"></i> <span data-i18n="services.pharmacy">الصيدلية</span></div>
+          <div class="sub-service"><i class="fas fa-hospital"></i> <span data-i18n="services.hospital">المستشفى</span></div>
+          <div class="sub-service"><i class="fas fa-clinic-medical"></i> <span data-i18n="services.clinic">المستوصف</span></div>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6" data-category="municipality">
+        <div class="service-folder" onclick="toggleDetails('municipality')" data-service="municipality">
+          <i class="fas fa-city"></i>
+          <h5 data-i18n="services.municipality">البلدية</h5>
+        </div>
+        <div class="service-details" id="municipality">
+          <div class="sub-service">
+            <i class="fas fa-calendar-check"></i> <span data-i18n="services.booking">حجز مواعيد</span>
+            <button class="btn btn-sm btn-primary ms-2" data-bs-toggle="modal" data-bs-target="#bookingModal" data-i18n="[innerHTML]services.book_now">احجز الآن</button>
+          </div>
+          <div class="sub-service"><i class="fas fa-file-alt"></i> <span data-i18n="services.admin">الخدمات الإدارية</span></div>
+          <div class="sub-service"><i class="fas fa-users"></i> <span data-i18n="services.support">دعم المواطنين</span></div>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6" data-category="security">
+        <div class="service-folder" onclick="toggleDetails('security')" data-service="security">
+          <i class="fas fa-shield-alt"></i>
+          <h5 data-i18n="services.security">الأمن</h5>
+        </div>
+        <div class="service-details" id="security">
+          <div class="sub-service"><i class="fas fa-shield-alt"></i> <span data-i18n="services.police">قسم الشرطة</span></div>
+          <div class="sub-service"><i class="fas fa-user-shield"></i> <span data-i18n="services.protection">خدمات الحماية المجتمعية</span></div>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6" data-category="education">
+        <div class="service-folder" onclick="toggleDetails('education')" data-service="education">
+          <i class="fas fa-school"></i>
+          <h5 data-i18n="services.education">التعليم</h5>
+        </div>
+        <div class="service-details" id="education">
+          <div class="sub-service"><i class="fas fa-school"></i> <span data-i18n="services.school">المدرسة</span></div>
+          <div class="sub-service"><i class="fas fa-graduation-cap"></i> <span data-i18n="services.high_school">الثانوية</span></div>
+          <div class="sub-service"><i class="fas fa-chalkboard-teacher"></i> <span data-i18n="services.primary">الابتدائية</span></div>
+          <div class="sub-service"><i class="fas fa-book-open"></i> <span data-i18n="services.courses">تعليم الدورات</span></div>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6" data-category="agriculture">
+        <div class="service-folder" onclick="toggleDetails('agriculture')" data-service="agriculture">
+          <i class="fas fa-tractor"></i>
+          <h5 data-i18n="services.agriculture">الزراعة</h5>
+        </div>
+        <div class="service-details" id="agriculture">
+          <div class="sub-service"><i class="fas fa-tractor"></i> <span data-i18n="services.farmers">دعم المزارعين</span></div>
+          <div class="sub-service"><i class="fas fa-seedling"></i> <span data-i18n="services.consulting">استشارات زراعية حديثة</span></div>
+          <div class="sub-service"><i class="fas fa-leaf"></i> <span data-i18n="services.fertilizers">دعم الأسمدة</span></div>
+          <div class="sub-service"><i class="fas fa-water"></i> <span data-i18n="services.irrigation">مياه السقي</span></div>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6" data-category="transport">
+        <div class="service-folder" onclick="toggleDetails('transport')" data-service="transport">
+          <i class="fas fa-bus"></i>
+          <h5 data-i18n="services.transport">النقل</h5>
+        </div>
+        <div class="service-details" id="transport">
+          <div class="sub-service"><i class="fas fa-bus"></i> <span data-i18n="services.public_transport">خدمات النقل العام في القرى</span></div>
+          <div class="sub-service"><i class="fas fa-ticket-alt"></i> <span data-i18n="services.ticket">حجز تذكرة</span></div>
+          <div class="sub-service"><i class="fas fa-taxi"></i> <span data-i18n="services.taxi">طلب سيارة أجرة خاصة</span></div>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6" data-category="donation">
+        <div class="service-folder" onclick="toggleDetails('donation')" data-service="donation">
+          <i class="fas fa-hand-holding-heart"></i>
+          <h5 data-i18n="services.donation">التبرع</h5>
+        </div>
+        <div class="service-details" id="donation">
+          <div class="sub-service">
+            <i class="fas fa-hand-holding-heart"></i> <span data-i18n="services.charity">تبرع لجمعيات خيرية</span>
+            <a href="https://www.paypal.com/donate?hosted_button_id=YOUR_BUTTON_ID" class="btn btn-sm btn-primary ms-2" data-i18n="[innerHTML]services.donate_now">تبرع الآن</a>
+          </div>
+          <div class="sub-service">
+            <i class="fas fa-donate"></i> <span data-i18n="services.schools_donation">تبرع للمدارس الخاصة</span>
+            <a href="https://www.paypal.com/donate?hosted_button_id=YOUR_BUTTON_ID" class="btn btn-sm btn-primary ms-2" data-i18n="[innerHTML]services.donate_now">تبرع الآن</a>
+          </div>
+          <div class="sub-service"><i class="fas fa-money-bill-wave"></i> <span data-i18n="services.donation_general">التبرع</span></div>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6" data-category="game">
+        <div class="service-folder" onclick="toggleDetails('game')" data-service="game">
+          <i class="fas fa-gamepad"></i>
+          <h5 data-i18n="services.rps_game">لعبة حجرة-ورقة-مقص</h5>
+        </div>
+        <div class="service-details" id="game">
+          <div class="sub-service">
+            <div class="game-container">
+              <button class="game-btn" onclick="playGame('حجرة')"><i class="fas fa-hand-rock"></i> <span data-i18n="game.rock">حجرة</span></button>
+              <button class="game-btn" onclick="playGame('ورقة')"><i class="fas fa-hand-paper"></i> <span data-i18n="game.paper">ورقة</span></button>
+              <button class="game-btn" onclick="playGame('مقص')"><i class="fas fa-hand-scissors"></i> <span data-i18n="game.scissors">مقص</span></button>
+              <p id="gameResult" data-i18n="game.result"></p>
+              <p id="gameScore" data-i18n="game.score">النقاط - أنت: 0 | الكمبيوتر: 0</p>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="col-md-4 col-sm-6" data-category="quiz">
+        <div class="service-folder" onclick="toggleDetails('quiz')" data-service="quiz">
+          <i class="fas fa-question-circle"></i>
+          <h5 data-i18n="services.quiz">اختبار معلومات القرية</h5>
+        </div>
+        <div class="service-details" id="quiz">
+          <div class="sub-service">
+            <div id="quizContainer">
+              <p id="quizQuestion" data-i18n="quiz.question"></p>
+              <div id="quizOptions"></div>
+              <p id="quizResult"></p>
+              <p id="quizScore" data-i18n="quiz.score">النقاط: 0</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class=
