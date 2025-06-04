@@ -16,14 +16,12 @@
       --main-white: #f8f9f7;
       --main-shadow: 0 2px 16px rgba(35,75,56,0.09);
     }
-
     body {
       background: var(--main-sea);
       color: var(--main-white);
       font-family: 'Tajawal', Arial, Helvetica, sans-serif;
       min-height: 100vh;
     }
-
     header {
       background: var(--main-dark);
       color: var(--main-accent);
@@ -33,18 +31,19 @@
       box-shadow: var(--main-shadow);
       position: relative;
     }
-
     .profile-img {
       width: 148px;
       height: 148px;
       object-fit: cover;
       border-radius: 50%;
-      border: 5px solid var(--main-gold);
       margin-bottom: 14px;
-      background: #fff;
+      background: transparent;
+      /* border: none; */
       box-shadow: 0 2px 9px rgba(35,75,56,0.10);
+      display: block;
+      margin-right: auto;
+      margin-left: auto;
     }
-
     header h1 {
       font-size: 2.1rem;
       margin-bottom: 8px;
@@ -53,7 +52,6 @@
       color: #fff;
       text-shadow: 0 1px 10px rgba(35, 75, 56, 0.15);
     }
-
     header p {
       font-size: 1.13rem;
       opacity: 0.96;
@@ -61,8 +59,7 @@
       margin-bottom: 0;
       color: var(--main-accent);
     }
-
-    /* شريط إعلاني إعلامي متحرك */
+    /* شريط إعلاني أول (متحرك يمين لليسار) */
     .announce-bar {
       background: var(--main-gold);
       color: var(--main-dark);
@@ -101,7 +98,42 @@
       from { transform: translateX(85%);}
       to   { transform: translateX(-100%);}
     }
-
+    /* شريط إعلاني ثاني (متحرك من اليسار لليمين) */
+    .announce-bar-left {
+      background: var(--main-sea);
+      color: var(--main-gold);
+      font-weight: bold;
+      font-size: 1.08rem;
+      border-bottom: 2px solid var(--main-gold);
+      overflow: hidden;
+      position: relative;
+      height: 40px;
+      display: flex;
+      align-items: center;
+    }
+    .announce-bar-left .announce-icon-left {
+      margin: 0 16px;
+      font-size: 1.22em;
+      color: var(--main-gold);
+      animation: pulse 1.5s infinite;
+    }
+    .announce-text-left {
+      white-space: nowrap;
+      overflow: hidden;
+      width: 100%;
+      direction: rtl;
+      position: relative;
+    }
+    .announce-text-left span {
+      display: inline-block;
+      padding-right: 25vw;
+      animation: ann-scroll-left 15s linear infinite;
+      direction: ltr;
+    }
+    @keyframes ann-scroll-left {
+      from { transform: translateX(-100%);}
+      to   { transform: translateX(90%);}
+    }
     nav {
       background: var(--main-accent);
       border-bottom: 3px solid var(--main-dark);
@@ -120,7 +152,6 @@
       background: var(--main-gold);
       color: #fff !important;
     }
-
     .section-title {
       color: var(--main-gold);
       font-size: 1.25rem;
@@ -129,7 +160,6 @@
       letter-spacing: 1px;
       text-align: right;
     }
-
     .card-custom {
       background: var(--main-white);
       color: var(--main-dark);
@@ -139,7 +169,6 @@
       margin-bottom: 28px;
       border-right: 7px solid var(--main-dark);
     }
-
     .folder-options {
       display: flex;
       flex-wrap: wrap;
@@ -171,7 +200,6 @@
       background: var(--main-gold);
       color: #fff;
     }
-
     .social-links a {
       color: var(--main-sea);
       background: var(--main-accent);
@@ -191,7 +219,6 @@
       color: var(--main-gold);
       transform: scale(1.13) rotate(-6deg);
     }
-
     footer {
       background: var(--main-dark);
       color: var(--main-accent);
@@ -201,7 +228,6 @@
       margin-top: 35px;
       border-radius: 22px 22px 0 0;
     }
-
     @media (max-width: 800px) {
       header h1 { font-size: 1.18rem; }
       .section-title { font-size: 1.08rem; }
@@ -217,11 +243,19 @@
     <p>مكافحة الجرائم الإلكترونية وتبنيـد الحسابات</p>
   </header>
 
-  <!-- شريط إعلاني إعلامي متحرك -->
+  <!-- شريط إعلاني أول (متحرك يمين لليسار) -->
   <div class="announce-bar">
     <span class="announce-icon"><i class="fas fa-bullhorn"></i></span>
     <div class="announce-text">
       <span>أهلاً بك في موقع أبو خالد الشعبي | خدمات احترافية في مكافحة الابتزاز الإلكتروني وتبنيـد الحسابات وحماية الخصوصية الرقمية</span>
+    </div>
+  </div>
+
+  <!-- شريط إعلاني ثاني (متحرك يسار ليمين) -->
+  <div class="announce-bar-left">
+    <span class="announce-icon-left"><i class="fas fa-bullhorn"></i></span>
+    <div class="announce-text-left">
+      <span>تواصل مع أبو خالد عبر حسابات التواصل الاجتماعي</span>
     </div>
   </div>
 
@@ -270,7 +304,7 @@
             <li>2022: تم حضر <b>264</b> حساب</li>
             <li>2023: تم حضر <b>146</b> حساب</li>
             <li>2024: تم حضر <b>131</b> حساب</li>
-           b> حساب <span style="color:#bba14f;font-weight:bold;">(قابل للزيادة)</span></li>
+            <li>2025: تم حضر <b>64</b> حساب <span style="color:#bba14f;font-weight:bold;">(قابل للزيادة)</span></li>
           </ul>
         </div>
       </div>
