@@ -1,183 +1,335 @@
 <!DOCTYPE html>
 <html lang="ar" dir="rtl">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>مركز البيان لخدمات الجوال</title>
-  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
+  <meta charset="width=device-width, initial-scale=1.0" />
+  <title>أبو خالد الشعيبي | مكافحة الجرائم الإلكترونية</title>
   <link href="https://fonts.googleapis.com/css2?family=Tajawal:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.rtl.min.css" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css" />
   <style>
+    :root {
+      --main-dark: #234b38;
+      --main-sea: #20504f;
+      --main-accent: #e0e7c6;
+      --main-gold: #bba14f;
+      --main-white: #f8f9f7;
+      --main-shadow: 0 2px 16px rgba(35,75,56,0.09);
+    }
     body {
-      margin: 0;
-      font-family: 'Tajawal', sans-serif;
-      background: #f1f5f4;
-      color: #222;
+      background: var(--main-sea);
+      color: var(--main-white);
+      font-family: 'Tajawal', Arial, Helvetica, sans-serif;
+      min-height: 100vh;
     }
-
     header {
-      background: #004b3c;
-      color: white;
-      padding: 25px 10px;
+      background: var(--main-dark);
+      color: var(--main-accent);
       text-align: center;
+      padding: 38px 12px 20px 12px;
+      border-bottom: 5px solid var(--main-gold);
+      box-shadow: var(--main-shadow);
+      position: relative;
     }
-
+    .profile-img {
+      width: 148px;
+      height: 148px;
+      object-fit: cover;
+      border-radius: 50%;
+      margin-bottom: 14px;
+      background: transparent;
+      box-shadow: 0 2px 9px rgba(35,75,56,0.10);
+      display: block;
+      margin-right: auto;
+      margin-left: auto;
+    }
     header h1 {
-      margin: 0;
-      font-size: 26px;
+      font-size: 2.1rem;
+      margin-bottom: 8px;
+      font-weight: 700;
+      letter-spacing: 1.2px;
+      color: #fff;
+      text-shadow: 0 1px 10px rgba(35, 75, 56, 0.15);
     }
-
     header p {
-      font-size: 14px;
-      opacity: 0.9;
-      margin-top: 5px;
+      font-size: 1.13rem;
+      opacity: 0.96;
+      font-weight: 500;
+      margin-bottom: 0;
+      color: var(--main-accent);
     }
-
+    /* شريط إعلاني أول (متحرك يمين لليسار) */
+    .announce-bar {
+      background: var(--main-gold);
+      color: var(--main-dark);
+      font-weight: bold;
+      font-size: 1.11rem;
+      border-bottom: 2px solid var(--main-accent);
+      overflow: hidden;
+      position: relative;
+      height: 44px;
+      display: flex;
+      align-items: center;
+    }
+    .announce-bar .announce-icon {
+      margin: 0 18px;
+      font-size: 1.3em;
+      color: var(--main-sea);
+      animation: pulse 1.5s infinite;
+    }
+    @keyframes pulse {
+      0%,100% { opacity: 0.9; }
+      50% { opacity: 1; }
+    }
+    .announce-text {
+      white-space: nowrap;
+      overflow: hidden;
+      width: 100%;
+      direction: rtl;
+      position: relative;
+    }
+    .announce-text span {
+      display: inline-block;
+      padding-left: 25vw;
+      animation: ann-scroll 17s linear infinite;
+    }
+    @keyframes ann-scroll {
+      from { transform: translateX(85%);}
+      to   { transform: translateX(-100%);}
+    }
+    /* شريط إعلاني ثاني (متحرك من اليسار لليمين) */
+    .announce-bar-left {
+      background: var(--main-sea);
+      color: var(--main-gold);
+      font-weight: bold;
+      font-size: 1.08rem;
+      border-bottom: 2px solid var(--main-gold);
+      overflow: hidden;
+      position: relative;
+      height: 40px;
+      display: flex;
+      align-items: center;
+    }
+    .announce-bar-left .announce-icon-left {
+      margin: 0 16px;
+      font-size: 1.22em;
+      color: var(--main-gold);
+      animation: pulse 1.5s infinite;
+    }
+    .announce-text-left {
+      white-space: nowrap;
+      overflow: hidden;
+      width: 100%;
+      direction: rtl;
+      position: relative;
+    }
+    .announce-text-left span {
+      display: inline-block;
+      padding-right: 25vw;
+      animation: ann-scroll-left 15s linear infinite;
+      direction: ltr;
+    }
+    @keyframes ann-scroll-left {
+      from { transform: translateX(-100%);}
+      to   { transform: translateX(90%);}
+    }
     nav {
-      background: #e9f3f1;
-      padding: 10px 0;
-      text-align: center;
+      background: var(--main-accent);
+      border-bottom: 3px solid var(--main-dark);
+      box-shadow: 0 2px 8px rgba(35,75,56,0.05);
+      border-radius: 0 0 16px 16px;
     }
-
-    nav a {
-      margin: 0 10px;
-      color: #004b3c;
-      text-decoration: none;
+    .nav-link {
+      color: var(--main-dark) !important;
       font-weight: bold;
+      padding: 11px 24px;
+      transition: color 0.3s, background 0.2s;
+      border-radius: 9px;
+      margin: 0 6px;
     }
-
-    nav a:hover {
-      text-decoration: underline;
+    .nav-link:hover, .nav-link.active {
+      background: var(--main-gold);
+      color: #fff !important;
     }
-
-    .title {
-      background: #fca311;
-      color: white;
-      text-align: center;
-      padding: 10px;
-      font-weight: bold;
-      font-size: 16px;
-    }
-
-    .grid {
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-      gap: 16px;
-      padding: 30px 15px;
-      max-width: 1000px;
-      margin: auto;
-    }
-
-    .card {
-      background: white;
-      border-radius: 12px;
-      padding: 20px 10px;
-      text-align: center;
-      box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-      transition: transform 0.2s;
-    }
-
-    .card:hover {
-      transform: translateY(-5px);
-    }
-
-    .card i {
-      font-size: 30px;
-      color: #fca311;
-      margin-bottom: 10px;
-    }
-
-    .card h3 {
-      font-size: 18px;
-      margin: 10px 0 5px;
-    }
-
-    .card p {
-      font-size: 14px;
-      color: #444;
-    }
-
     .section-title {
-      text-align: center;
-      margin-top: 20px;
-      font-size: 20px;
-      color: #004b3c;
+      color: var(--main-gold);
+      font-size: 1.25rem;
+      font-weight: 800;
+      margin-bottom: 17px;
+      letter-spacing: 1px;
+      text-align: right;
     }
-
-    .about {
-      text-align: center;
-      padding: 20px 30px;
-      font-size: 15px;
-      color: #333;
-      max-width: 800px;
-      margin: auto;
+    .card-custom {
+      background: var(--main-white);
+      color: var(--main-dark);
+      border-radius: 15px;
+      box-shadow: var(--main-shadow);
+      padding: 20px 16px;
+      margin-bottom: 28px;
+      border-right: 7px solid var(--main-dark);
     }
-
+    .folder-options {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 13px;
+      margin-right: 6px;
+      margin-top: 4px;
+    }
+    .folder-option {
+      background: var(--main-accent);
+      color: var(--main-dark);
+      border-radius: 8px;
+      padding: 8px 18px;
+      font-size: 1rem;
+      font-weight: 500;
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      box-shadow: 0 2px 8px rgba(35,75,56,0.04);
+      margin-bottom: 6px;
+      transition: background 0.2s, color 0.2s;
+      cursor: pointer;
+      border: none;
+    }
+    .folder-option .fab, .folder-option .fas {
+      font-size: 1.14em;
+      margin-left: 4px;
+    }
+    .folder-option:hover {
+      background: var(--main-gold);
+      color: #fff;
+    }
+    .social-links a {
+      color: var(--main-sea);
+      background: var(--main-accent);
+      border-radius: 50%;
+      width: 42px;
+      height: 42px;
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 1.26em;
+      margin: 0 7px;
+      box-shadow: 0 2px 8px rgba(35,75,56,0.07);
+      transition: background 0.2s, color 0.2s, transform 0.2s;
+    }
+    .social-links a:hover {
+      background: var(--main-dark);
+      color: var(--main-gold);
+      transform: scale(1.13) rotate(-6deg);
+    }
     footer {
-      background: #004b3c;
-      color: white;
+      background: var(--main-dark);
+      color: var(--main-accent);
+      padding: 20px 0 11px 0;
       text-align: center;
-      padding: 15px;
-      margin-top: 30px;
-      font-size: 14px;
+      font-size: 1.07rem;
+      margin-top: 35px;
+      border-radius: 22px 22px 0 0;
+    }
+    @media (max-width: 800px) {
+      header h1 { font-size: 1.18rem; }
+      .section-title { font-size: 1.08rem; }
+      .folder-option { font-size: 0.97rem; padding: 7px 9px; }
+      .profile-img { width: 100px; height: 100px;}
     }
   </style>
 </head>
 <body>
+  <header>
+    <img src="fs4abo1.png/fs4abo1.png" alt="شعار الموقع" class="profile-img">
+    <h1>أبو خالد الشعبي</h1>
+    <p>مكافحة الجرائم الإلكترونية وتبنيـد الحسابات</p>
+  </header>
 
-<header>
-  <h1>مركز البيان لخدمات الجوال</h1>
-  <p>خبرة واحترافية في عالم التقنية والاتصالات</p>
-</header>
-
-<nav>
-  <a href="#">الرئيسية</a>
-  <a href="#">الخدمات</a>
-  <a href="#">عن المركز</a>
-</nav>
-
-<div class="title">جميع خدمات مركز البيان</div>
-
-<section class="grid">
-  <div class="card">
-    <i class="fas fa-tools"></i>
-    <h3>الصيانة</h3>
-    <p>صيانة شاملة لجميع أجهزة الجوال</p>
+  <!-- شريط إعلاني أول (متحرك يمين لليسار) -->
+  <div class="announce-bar">
+    <span class="announce-icon"><i class="fas fa-bullhorn"></i></span>
+    <div class="announce-text">
+      <span>أهلاً بك في موقع أبو خالد الشعيبي | خدمات احترافية في مكافحة الابتزاز الإلكتروني وتبنيـد الحسابات وحماية الخصوصية الرقمية</span>
+    </div>
   </div>
-  <div class="card">
-    <i class="fas fa-mobile-alt"></i>
-    <h3>بيع أجهزة</h3>
-    <p>جوالات أصلية حديثة بأسعار ممتازة</p>
-  </div>
-  <div class="card">
-    <i class="fas fa-sim-card"></i>
-    <h3>بطاقات وشحن</h3>
-    <p>كروت شحن لجميع الشبكات</p>
-  </div>
-  <div class="card">
-    <i class="fas fa-wifi"></i>
-    <h3>تجديد إنترنت</h3>
-    <p>تجديد باقات الانترنت الشهرية</p>
-  </div>
-  <div class="card">
-    <i class="fas fa-headset"></i>
-    <h3>دعم فني</h3>
-    <p>حل مشاكل البرامج والأجهزة</p>
-  </div>
-  <div class="card">
-    <i class="fas fa-shield-alt"></i>
-    <h3>حماية</h3>
-    <p>برامج حماية ونسخ احتياطي آمن</p>
-  </div>
-</section>
 
-<h2 class="section-title">نبذة عن المركز</h2>
-<div class="about">
-  مركز البيان لخدمات الجوال هو وجهتك الموثوقة لتقديم أفضل خدمات الهواتف المحمولة، من صيانة وبيع الأجهزة إلى الشحن والدعم الفني. نتميز بالمصداقية وسرعة الإنجاز.
-</div>
+  <!-- شريط إعلاني ثاني (متحرك يسار ليمين) -->
+  <div class="announce-bar-left">
+    <span class="announce-icon-left"><i class="fas fa-bullhorn"></i></span>
+    <div class="announce-text-left">
+      <span>تواصل مع أبو خالد عبر حسابات التواصل الاجتماعي</span>
+    </div>
+  </div>
 
-<footer>
-  &copy; 2025 مركز البيان - جميع الحقوق محفوظة
-</footer>
+  <nav class="nav justify-content-center">
+    <a class="nav-link" href="#ban">تبنيد الحسابات</a>
+    <a class="nav-link" href="#crime">مكافحة الجرائم</a>
+    <a class="nav-link" href="#work">أعمالي</a>
+    <a class="nav-link" href="#contact">تواصل</a>
+  </nav>
 
+  <div class="container my-5">
+    <div class="row g-4">
+      <!-- تبنيد الحسابات -->
+      <div class="col-lg-6 col-md-12" id="ban">
+        <div class="card-custom">
+          <div class="section-title"><i class="fas fa-folder"></i> تبنيد الحسابات</div>
+          <div class="folder-options">
+            <div class="folder-option"><i class="fab fa-instagram" style="color:#C13584"></i> تبنيد حساب انستا</div>
+            <div class="folder-option"><i class="fab fa-facebook" style="color:#1877f3"></i> تبنيد حساب فيسبوك</div>
+            <div class="folder-option"><i class="fab fa-tiktok" style="color:#000"></i> تبنيد حساب تيك توك</div>
+            <div class="folder-option"><i class="fab fa-whatsapp" style="color:#25D366"></i> تبنيد واتساب</div>
+            <div class="folder-option"><i class="fab fa-telegram" style="color:#229ED9"></i> تبنيد تلجرام</div>
+          </div>
+        </div>
+      </div>
+      <!-- مكافحة الجرائم -->
+      <div class="col-lg-6 col-md-12" id="crime">
+        <div class="card-custom">
+          <div class="section-title"><i class="fas fa-folder"></i> مكافحة الجرائم الإلكترونية</div>
+          <div class="folder-options">
+            <div class="folder-option"><i class="fas fa-user-shield" style="color:#20504f"></i> مكافحة الابتزاز</div>
+            <div class="folder-option"><i class="fas fa-ban" style="color:#bba14f"></i> مكافحة المحتوى الهابط</div>
+            <div class="folder-option"><i class="fas fa-bug" style="color:#234b38"></i> مكافحة الاختراق</div>
+          </div>
+        </div>
+      </div>
+      <!-- أعمالي -->
+      <div class="col-lg-6 col-md-12" id="work">
+        <div class="card-custom">
+          <div class="section-title"><i class="fas fa-folder"></i> أعمالي</div>
+          <ul style="direction:rtl; font-size:1.04em; margin-bottom:0; padding-right:15px;">
+            <li>2018: تم حضر أكثر من <b>10</b> حساب</li>
+            <li>2019: تم حضر <b>300</b> حساب</li>
+            <li>2020: تم حضر <b>371</b> حساب</li>
+            <li>2021: تم حضر <b>117</b> حساب</li>
+            <li>2022: تم حضر <b>264</b> حساب</li>
+            <li>2023: تم حضر <b>146</b> حساب</li>
+            <li>2024: تم حضر <b>131</b> حساب</li>
+            <li>2025: تم حضر <b>64</b> حساب <span style="color:#bba14f;font-weight:bold;">(قابل للزيادة)</span></li>
+          </ul>
+        </div>
+      </div>
+      <!-- التوعية الرقمية -->
+      <div class="col-lg-6 col-md-12">
+        <div class="card-custom">
+          <div class="section-title"><i class="fas fa-folder"></i> التوعية الرقمية</div>
+          <div class="folder-options">
+            <div class="folder-option"><i class="fas fa-lock"></i> نصائح حماية الخصوصية</div>
+            <div class="folder-option"><i class="fas fa-user-secret"></i> حماية بياناتك الشخصية</div>
+            <div class="folder-option"><i class="fas fa-lightbulb"></i> كيف تتجنب الابتزاز الإلكتروني</div>
+            <div class="folder-option"><i class="fas fa-exclamation-circle"></i> إسعافات أولية لأمان حسابك</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- حساباتي على التواصل الاجتماعي -->
+    <div class="section-title mt-5" id="contact">تابعني على حساباتي</div>
+    <div class="social-links text-center my-3">
+      <a href="https://www.facebook.com/share/16TmMJvPUj/" target="_blank" title="فيسبوك"><i class="fab fa-facebook-f"></i></a>
+      <a href="https://www.instagram.com/k5oi2?igsh=MXF4ODdsMmk2NmdoZQ==" target="_blank" title="انستقرام"><i class="fab fa-instagram"></i></a>
+      <a href="https://www.tiktok.com/@h.fs4?_t=ZS-8wvytufpBkA&_r=1" target="_blank" title="تيك توك"><i class="fab fa-tiktok"></i></a>
+    </div>
+  </div>
+
+  <footer>
+    © 2025 أبو خالد الشعيبي. جميع الحقوق محفوظة. | مكافحة الجرائم الإلكترونية
+  </footer>
 </body>
 </html>
